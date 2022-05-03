@@ -1,5 +1,6 @@
 import argparse
 import logging
+from datetime import datetime
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -54,7 +55,7 @@ if __name__ == '__main__':
     net = torch.load(args.network, map_location=device)
     logging.info('Done')
 
-    img_data = CameraData(include_depth=args.use_depth, include_rgb=args.use_rgb)
+    img_data = CameraData(width=pic.width, height=pic.height, include_depth=args.use_depth, include_rgb=args.use_rgb)
 
     x, depth_img, rgb_img = img_data.get_data(rgb=rgb)
 
@@ -81,4 +82,4 @@ if __name__ == '__main__':
                          grasp_angle_img=ang_img,
                          no_grasps=args.n_grasps,
                          grasp_width_img=width_img)
-            fig.savefig('img_result.pdf')
+            fig.savefig(f'img_result_{datetime.now()}.pdf')
